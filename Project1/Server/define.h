@@ -1,0 +1,7 @@
+#ifndef MAKEWORD		
+#define MAKEWORD(l,h) ((WORD)(((BYTE)(l))|(((WORD)(BYTE)(h))<<8)))
+#endif
+
+#define WSA_MAJOR_VERSION 1
+#define WSA_MINOR_VERSION 1
+#define WSA_VERSION MAKEWORD(WSA_MAJOR_VERSION, WSA_MINOR_VERSION)
