@@ -40,3 +40,25 @@ Write an application that correctly implements the MD5 algorithm. Requirements:
 3. Verify the integrity of the file in two ways.
     -  Manually input the MD5 digest of the file, calculate the MD5 digest of the file under test, and compare the two; if they are the same, the file is considered complete; otherwise, the file is corrupted.
     - Generate the MD5 digest of the file under test using Windows system tools, calculate the MD5 digest of the file under test, and compare the two to obtain the result.
+
+**Demos:**
+
+![](/Project3/result1.png) 
+
+Input "t" to test this MD5 application:
+
+![](/Project3/result2.png) 
+
+Input "c" to generate MD5 digest for a given file:
+
+![](/Project3/result3.png) 
+
+Input "v" to validate MD5 digest for a given file via manual input:
+
+![](/Project3/result4.png) 
+
+Input "f" to validate MD5 digest for a given file via MD5 file:
+
+![](/Project3/result5.png) 
+
+See codes for *[project 3](/Project3)*. 
