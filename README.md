@@ -1,12 +1,12 @@
 # Network Security
 
+Network Security course projects.
+
 **Language:** C++
 
 **Platform:** Visual Studio 2010
 
 ## Overview
-
-Network Security course projects.
 
 ### Project 1 - TCP communication based on DES encryption
 
@@ -14,11 +14,19 @@ Network Security course projects.
 2. Implement DES strings encryption and decryption operations.
 3. Implement a TCP chat program with DES encryption by combining 1 and 2; the sender encrypts and the receiver decrypts with a pre-agreed key to ensure the confidentiality of the message during the network transmission.
 
+**Demos:**
+![](/Project1/result.png) 
+Codes for *[project 1](/Project1)*. 
+
 ### Project 2 - TCP communication based on RSA encryption
 
 1. Implement automatic key distribution encryption chat program based on RSA. 
 2. The application maintains all the operations in Project 1 - "TCP communication based on DES encryption", and extends it to achieve automatic key generation and secret sharing based on RSA algorithm. 
 3. Full duplex communication is required and the encryption process is completely transparent to the user.
+
+**Demos:**
+![](/Project2/result.png) 
+Codes for *[project 2](/Project2)*. 
 
 ### Project 3 - MD5 message-digest algorithm
 
