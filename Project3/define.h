@@ -1,8 +1,8 @@
 
-#define F(x, y, z) (((x) & (y)) | ((~x) & (z)))   //F 函数 
-#define G(x, y, z) (((x) & (z)) | ((y) & (~z)))	  //G 函数 
-#define H(x, y, z) ((x) ^ (y) ^ (z))			  //H 函数 
-#define I(x, y, z) ((y) ^ ((x) | (~z)))			  //I 函数 
+#define F(x, y, z) (((x) & (y)) | ((~x) & (z)))   //F function
+#define G(x, y, z) (((x) & (z)) | ((y) & (~z)))	  //G function 
+#define H(x, y, z) ((x) ^ (y) ^ (z))			  //H function 
+#define I(x, y, z) ((y) ^ ((x) | (~z)))			  //I function 
 #define ROTATE_LEFT(x, n) (((x) << (n)) | ((x) >> (32-(n)))) 
 
 #define FF(a, b, c, d, x, s, ac) {   \

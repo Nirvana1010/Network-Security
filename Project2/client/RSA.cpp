@@ -34,7 +34,6 @@ RsaParam CRSASection::RsaGetParam()
 	}while(Gcd(Rsa.e, Rsa.f) != 1);
 	
 	Rsa.d = Euclid(Rsa.e, Rsa.f);
-	//cout << "d: " << Rsa.d << endl;
 	Rsa.s = 0;
 	t = Rsa.n >> 1;
 	while(t)
@@ -52,10 +51,10 @@ unsigned int CRSASection::Gcd(unsigned int p, unsigned int q)
 	unsigned int t;
 
 	if(p == q)
-		return p;	//两数相等，最大公约数就是本身
+		return p;	//Greatest common divisor is themselves if 2 number equal
 	 else     
 	 {         
-		 while(b)    //辗转相除法,gcd(a,b)=gcd(b,a-qb)         
+		 while(b)    //Euclidean algorithm, gcd(a,b)=gcd(b,a-qb)         
 		 {             
 			 a=a % b;             
 			 t=a;             

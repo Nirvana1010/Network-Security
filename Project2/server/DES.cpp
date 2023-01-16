@@ -18,7 +18,7 @@ int atoi(char a)
 		return -1;
 }
 
-//字符转为 7bit ASCII + 奇偶校验
+//string -> 7bit ASCII + parity check
 void decToBin(int dec, char cha[9])
 {
 	int result = 0, temp = dec, j = 1;
@@ -58,7 +58,7 @@ void permute(char *ini, char *res, int n, int *PC);
 
 void shift(char *ini, char *res, int n, int bit);
 
-//得到每一轮子密钥
+//generate sub-key
 void CDesOperate::MakeKey(char *key, char (*subkey)[49])
 {
 	char left_res[29] = "", right_res[29] = "";
@@ -97,7 +97,7 @@ void CDesOperate::MakeKey(char *key, char (*subkey)[49])
 	}
 }
 
-//置换函数
+//permutation
 void permute(char *ini, char *res, int n, int *PC)
 {
 	int i = 0;
@@ -107,7 +107,7 @@ void permute(char *ini, char *res, int n, int *PC)
 	return ;
 }
 
-//循环左移
+//left shift
 void shift(char *ini, char *res, int n, int bit)
 {
 	int i;
@@ -117,7 +117,6 @@ void shift(char *ini, char *res, int n, int bit)
 	return ;
 }
 
-//按位异或运算
 void xor(char *right, char *key, int n, char *res)
 {
 	int i;
@@ -127,7 +126,7 @@ void xor(char *right, char *key, int n, char *res)
 	return ;
 }
 
-//S盒置换运算
+//S-box permutation
 void S_box(char (*in)[7], char out[33])
 {
 	int i;
@@ -136,12 +135,10 @@ void S_box(char (*in)[7], char out[33])
 	int index;
 	for(i = 0; i < 8; i++)
 	{
-		//line = atoi(in[i][0])*2 + atoi(in[i][1]);
-		//column = atoi(in[i][5])*8 + atoi(in[i][2])*4 + atoi(in[i][3])*2 + atoi(in[i][4]);
 		index = atoi(in[i][0])*32 + atoi(in[i][1])*16 + atoi(in[i][2])*8 + 
 			atoi(in[i][3])*4 + atoi(in[i][4])*2 + atoi(in[i][5]);
 		tmp = des_S[i][index];
-		//cout << "tmp: " << tmp << endl;
+
 		switch(tmp)
 		{
 		case 0:
@@ -248,7 +245,6 @@ void CDesOperate::HandleData(char *text, char *key, char cipher[65], bool encode
 	int i;
 	char decode_tmp[33] = "";
 
-	//初始置换
 	if(encode)
 		permute(text, text_permute, 64, pc_first);
 	else
@@ -258,14 +254,13 @@ void CDesOperate::HandleData(char *text, char *key, char cipher[65], bool encode
 		strncpy(text_permute, text_permute+32, 32);
 		strncpy(text_permute+32, decode_tmp, 32);
 	}
-	//cout << "IP: " << text_permute << endl;
+
 	text_permute[64] = '\0';
 	strncpy(left, text_permute, 32);
 	left[32] = '\0';
 	strncpy(right, text_permute+32, 32);
 	right[32] = '\0';
 
-	//子密钥
 	MakeKey(key, subKey);
 	
 	if(encode == false)
@@ -278,20 +273,11 @@ void CDesOperate::HandleData(char *text, char *key, char cipher[65], bool encode
 		}
 	}
 	
-
-	//cout << "left: " << left << endl;
-	//cout << "right: " << right << endl;
 	for(i = 0; i < 16; i++)
 	{
 		MakeData(left, right, subKey[i]);
-		//cout << "key: " << subKey[i] << endl;
-		//MakeData(left, right, subKey[0]);
-		/*cout << "******************" << i << "*****************" << endl;
-		cout << "left: " << left << endl;
-		cout << "right: " << right << endl;*/
 	}
 
-	//逆IP置换
 	if(encode)
 	{
 		strncpy(ite_res, left, 32);
@@ -304,8 +290,6 @@ void CDesOperate::HandleData(char *text, char *key, char cipher[65], bool encode
 		strncpy(ite_res+32, left, 32);
 		permute(ite_res, cipher, 64, pc_last);
 	}
-	//cout << "IP-1: " << cipher << endl;
-
 	return ;
 }
 
@@ -331,11 +315,8 @@ void CDesOperate::Encry(char* pPlaintext,  int nPlaintextLength,  char *pCipherB
 		exit(0);
 	}
 	
-	
-	//原文分解为8bit一组的字符串
 	while(num > 0)
 	{
-		//8字符一组的明文加密
 		strncpy(tmp_text, pPlaintext+i*8, 8);
 		decToBin((int)tmp_text[0], tmp_cha);
 		strncpy(cleartext, tmp_cha, 8);
@@ -344,8 +325,6 @@ void CDesOperate::Encry(char* pPlaintext,  int nPlaintextLength,  char *pCipherB
 			decToBin((int)tmp_text[j], tmp_cha);
 			strncat(cleartext+8, tmp_cha, 8);
 		}
-
-		//cout << "cleartext: " << cleartext << endl;
 
 		//KEY
 		strncpy(tmp_key, pKey, 8);
@@ -367,7 +346,6 @@ void CDesOperate::Encry(char* pPlaintext,  int nPlaintextLength,  char *pCipherB
 		i++;
 	}
 	
-	//剩余部分
 	if(remain != 0)
 	{
 		memset(key, '\0', sizeof(key));
@@ -446,7 +424,6 @@ void CDesOperate::Decry(char* pCipher,  int nCipherBufferLength,  char *pPlainte
 	}
 	//cout << "key:" << key << endl;
 
-	//对每一段64bit的密文进行解密
 	while(num > 0)
 	{
 		strncpy(tmp_cipher, pCipher+i*64, 64);
@@ -478,7 +455,6 @@ void CDesOperate::GenerateDesKey(char *key)
 	char *alpha = NULL;
 	for(i = 0; i < 8; i++)
 	{
-		//生成范围在 65-90 内的随机数
 		tmp = rand() % 26;
 		tmp += 65;
 		alpha = (char *)&tmp;

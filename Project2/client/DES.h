@@ -4,27 +4,27 @@ typedef int INT32;
 class CDesOperate
 {
 private:   
-	//一次完整的加密/解密
+	//Whole process of Encryption/Decryption
 	void HandleData(char text[64], char key[64], char cipher[65], bool encode); 
 
-	//实现每一轮除去初始置换和逆初始置换的中间操作
+	//Data Transfer
 	void MakeData(char *left, char *right, char *key); 
 
-	//形成16个密钥中的每一个子密钥
+	//Generate 16 sub-keys
 	void MakeKey(char *key, char (*subkey)[49]);
 
 public:  
 	//CDesOperate(); 
 	//~CDesOperate();
 
-	//加密
+	//Encryption
 	void Encry(char* pPlaintext,  int nPlaintextLength,  char *pCipherBuffer,  
 		int nCipherBufferLength,  char *pKey, int nKeyLength); 
 
-	//解密
+	//Decryption
 	void Decry(char* pCipher,  int nCipherBufferLength,  char *pPlaintextBuffer,  
 		int nPlaintextBufferLength,  char *pKey, int nKeyLength);
 
-	//生成随机 DES key
+	//Generate DES key
 	void GenerateDesKey(char *key);
 };

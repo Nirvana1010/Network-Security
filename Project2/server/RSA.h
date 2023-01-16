@@ -8,10 +8,10 @@ private:
 
 	RsaParam RsaGetParam();
 
-	//求最大公约数
+	//get greatest common divisor
 	unsigned int Gcd(unsigned int p, unsigned int q);
 
-	//生成私钥
+	//geterate private key
 	unsigned __int64 Euclid(unsigned int e, unsigned int t_n);
 	
 public:

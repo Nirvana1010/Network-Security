@@ -14,8 +14,8 @@ int main()
 	char input;
 	MD5 md5;
 
-	cout << "*********»ùÓÚ MD5 Ëã·¨µÄÎÄ¼þÍêÕûÐÔÐ£Ñé³ÌÐòÒÑÆô¶¯*********" << endl;
-	cout << "Usage£º" << endl;
+	cout << "*********ï¿½ï¿½ï¿½ï¿½ MD5 ï¿½ã·¨ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*********" << endl;
+	cout << "Usageï¿½ï¿½" << endl;
 	cout << "[-h]  --help information" << endl;
 	cout << "[-t]  --test MD5 application " << endl;
 	cout << "[-c]  [file path of the file computed] " << endl;
@@ -28,7 +28,7 @@ int main()
 
 	while(1)
 	{
-		cout << "ÇëÊäÈëÑ¡Ïî£º" << endl;
+		cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½î£º" << endl;
 		cin >> input;
 
 		if(input == 't')
@@ -61,7 +61,7 @@ int main()
 		else if(input == 'c')
 		{
 			char filename[50];
-			cout << "ÇëÊäÈëÎÄ¼þ£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½" << endl;
 			cin >> filename;
 
 			md5.Reset();
@@ -73,26 +73,26 @@ int main()
 		{
 			char filename[50];
 			char InputMD5[33];
-			cout << "ÇëÊäÈë´ý¼ì²âµÄÎÄ¼þ£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½" << endl;
 			cin >> filename;
 
-			cout << "ÇëÊäÈë±»²âÎÄ¼þµÄMD5ÕªÒª£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ë±»ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½MD5ÕªÒªï¿½ï¿½" << endl;
 			cin >> InputMD5;
 			InputMD5[32] = '\0';
 
-			cout << "ÄãÊäÈëµÄMD5ÕªÒªÎª£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MD5ÕªÒªÎªï¿½ï¿½" << endl;
 			cout << InputMD5 << endl;
 
 			md5.Reset();
 			md5.Update(ifstream(filename));
 			string OutputMD5 = md5.Tostring();
 			const char* pResult = OutputMD5.c_str();
-			cout << "¼ÆËã³öµÄMD5ÕªÒªÎª£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MD5ÕªÒªÎªï¿½ï¿½" << endl;
 			cout << pResult << endl;
 			if(strcmp(InputMD5, pResult) == 0)
-				cout << "ÎÄ¼þÍêÕû£¡" << endl;
+				cout << "ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
 			else
-				cout << "ÎÄ¼þ±»´Û¸Ä£¡" << endl;
+				cout << "ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Û¸Ä£ï¿½" << endl;
 		}
 		else if(input == 'f')
 		{
@@ -100,28 +100,28 @@ int main()
 			char MD5_filename[50];
 			char record[33];
 
-			cout << "ÇëÊäÈë´ý¼ì²âµÄÎÄ¼þ£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½" << endl;
 			cin >> filename;
-			cout << "ÇëÊäÈëMD5ÎÄ¼þ£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MD5ï¿½Ä¼ï¿½ï¿½ï¿½" << endl;
 			cin >> MD5_filename;
 
 			ifstream MD5_file(MD5_filename);
 			MD5_file.getline(record, 32);
 			MD5_file.getline(record, 33);
 			record[32] = '\0';
-			cout << "¶ÁÈ¡µ½µÄMD5ÎÄ¼þÕªÒªÎª£º" << endl;
+			cout << "ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½MD5ï¿½Ä¼ï¿½ÕªÒªÎªï¿½ï¿½" << endl;
 			cout << record << endl;
 
 			md5.Reset();
 			md5.Update(ifstream(filename));
 			string OutputMD5 = md5.Tostring();
 			const char* pResult = OutputMD5.c_str();
-			cout << "¼ÆËã³öµÄMD5ÕªÒªÎª£º" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MD5ÕªÒªÎªï¿½ï¿½" << endl;
 			cout << pResult << endl;
 			if(strcmp(record, pResult) == 0)
-				cout << "ÎÄ¼þÍêÕû£¡" << endl;
+				cout << "ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
 			else
-				cout << "ÎÄ¼þ±»´Û¸Ä£¡" << endl;
+				cout << "ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Û¸Ä£ï¿½" << endl;
 		}
 		else if(input == 'q')
 			return 0;

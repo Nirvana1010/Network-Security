@@ -24,45 +24,21 @@ int main()
 	int nLength = 256;
 	struct sockaddr_in sLocalAddr, sRemoteAddr;
 	WSADATA sentWsa;
-	//CDesOperate des;
 	char clear[8] = {'B', 'L', 'A', 'C', 'K', 'H', 'A', 'T'};
-	//char cipher[129] = "";
 	char decode_text[17] = "";
 	char desKey[9] = "";
-	/*
-	des.Encry(clear, 8, cipher, 65, key, 8);
-	cout << endl << "cipher: " <<  cipher << endl;
 
-	des.Decry(cipher, 65, decode_text, 9, key, 8);
-	decode_text[16] = '\0';
-	cout << decode_text << endl;
-	*/
-
-	//des.GenerateDesKey(desKey);
-	//cout << "init: " << desKey << endl;
 	CRSASection cRsaSection;
 	PublicKey cRsaPublicKey;
 	unsigned __int64 EncryptDesKey[8];
 	cRsaPublicKey = cRsaSection.GetPublicKey();
-	//cout << "public key: n	" << cRsaPublicKey.nN << endl;
-	//cout << "public key: e	" << cRsaPublicKey.nE << endl;
 	
 	unsigned short *pDesKey = (unsigned short *)desKey;
 	unsigned short *pDecryptDesKey = (unsigned short *)EncryptDesKey;
-	/*
-	for(int i = 0; i < 8; i++)
-		EncryptDesKey[i] = cRsaSection.Encry(pDesKey[i], cRsaPublicKey);
- 
-	for(int i = 0; i < 8; i++)
-		pDecryptDesKey[i] = cRsaSection.Decry(EncryptDesKey[i]);
-	
-	char *res = (char*) pDecryptDesKey;
-	cout << "decry: " << res << endl;
-	*/
 	
 	if(WSAStartup(WSA_VERSION, &sentWsa) != 0)
 	{
-		cout << "SocketÆô¶¯Ê§°Ü" << endl;
+		cout << "Socket Startup Failed" << endl;
 		return 1;
 	}
 
@@ -127,13 +103,10 @@ int main()
 		for(int i = 0; i < 8; i++)
 		{
 			pDecryptDesKey[i] = cRsaSection.Decry(EncryptDesKey[i]);
-			//cout << EncryptDesKey[i] << " ";
-			//cout << pDecryptDesKey[i] << " ";
 		}
 	} 
 
 	char *res = (char*) pDecryptDesKey;
-	//cout << "decry: " << res << endl;
 
 	SecretChat(nAcceptSocket, inet_ntoa(sRemoteAddr.sin_addr), res);
 
@@ -209,41 +182,6 @@ void SecretChat(int nSock, char *pRemoteName, char *pKey)
 		}  
 	}   
 	
-	/*
-	HANDLE handle1;
-	handle1 = CreateThread(NULL,0,MyThread,NULL,0,NULL);
-
-	if(handle1 == NULL)
-	{
-		cout << "Create Thread Fail" << endl;
-		exit(0);
-	}
-
-	while(1)
-	{
-		memset(&strSocketBuffer, 0, 256);  
-		int nLength = 0;
-		nLength = TotalRecv(nSock, strSocketBuffer, 64, 0);
-		//if(nLength != 256)
-		//	break;
-		//else
-		//	int nLen = 256;
-
-		if(nLength == -1)
-			continue;
-
-		//TODO:DECODE
-		//cout << "receive cipher:" << strSocketBuffer << endl;
-		cDes.Decry(strSocketBuffer, nLength, plainText, 9, pKey, strlen(pKey));
-
-		cout << "Recerve Message from " << pRemoteName << ": " << plainText << endl;
-		if(memcmp("quit", plainText, 4) == 0)
-		{
-			cout << "Quit!" << endl;
-			break;
-		}
-	}
-	*/
 }
 
 DWORD WINAPI MyThread(LPVOID lpParameter)
@@ -254,12 +192,10 @@ DWORD WINAPI MyThread(LPVOID lpParameter)
 	{
 		memset(&strStdinBuffer, 0, 256);
 		while(strStdinBuffer[0] == 0)
-			//if(fgets(strStdinBuffer, 256, stdin) == NULL)
-			//	continue;
 			cin.getline(strStdinBuffer, 256);
 		int nLen = 256;
 
-		//TODO:ENCODE
+		//ENCODE
 		int length = ((strlen(strStdinBuffer)/9)+1)*8*8 + 1;
 		cipher = new char[length];
 		cDes.Encry(strStdinBuffer, strlen(strStdinBuffer), cipher, length, key, strlen(key));
@@ -284,7 +220,6 @@ size_t TotalRecv(int s, void *buf, size_t len, int flags)
 		if(nRes<0 || nRes+nCurSize>len)   
 		    return -1;   
 		nCurSize += nRes;
-		//cout << "nCurSize: " << nCurSize << endl;
 	}
 	return nCurSize;
 }

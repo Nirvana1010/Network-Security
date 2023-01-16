@@ -10,23 +10,21 @@ const char MD5::hex[16] = {
 
 void MD5::Update(const BYTE* input,size_t length) 
 {  
-	DWORD i,index,partLen; 
-	//设置停止标识  
+	DWORD i,index,partLen;  
 	is_finished = false;    
 
-	//计算 buffer 已经存放的字节数  
+	//count bytes in buffer
 	index = (DWORD)((count[0] >> 3) & 0x3f);                   
  
-	//更新计数器 count，将新数据流的长度加上计数器原有的值  
+	//update counts
 	if((count[0] += ((DWORD)length << 3)) < ((DWORD)length << 3))  
-		//判断是否进位   
 		count[1]++;                         
 	count[1] += ((DWORD)length >> 29); 
  
-	//求出 buffer 中剩余的长度  
+	//remaininglength in buffer 
 	partLen = 64 - index;  
  
-	//将数据块逐块进行 MD5 运算  
+	//generate MD5 digest
 	if(length >= partLen)      
 	{   
 		memcpy(&buffer_block[index], input, partLen); 
@@ -39,7 +37,7 @@ void MD5::Update(const BYTE* input,size_t length)
 	{  
 		i = 0;  
 	} 
-	//将不足 64 字节的数据复制到 buffer_block 中     
+	//copy data shorter than 64 bytes to buffer_block 锟斤拷     
 	memcpy(&buffer_block[index], &input[i], length-i);   
 } 
 
@@ -54,7 +52,7 @@ void MD5::Transform(const BYTE block[64])
  
 	Decode(block, x, 64); 
  
-	/* 第 1 轮 */       
+	/* Round 1 */       
 	FF (a, b, c, d, x[ 0], S11, 0xd76aa478); /* 1 */
 	FF (d, a, b, c, x[ 1], S12, 0xe8c7b756); /* 2 */
 	FF (c, d, a, b, x[ 2], S13, 0x242070db); /* 3 */
@@ -71,7 +69,7 @@ void MD5::Transform(const BYTE block[64])
 	FF (d, a, b, c, x[13], S12, 0xfd987193); /* 14 */
 	FF (c, d, a, b, x[14], S13, 0xa679438e); /* 15 */
 	FF (b, c, d, a, x[15], S14, 0x49b40821); /* 16 */
-	/* 第 2 轮 */  
+	/* Round 2 */   
 	GG (a, b, c, d, x[ 1], S21, 0xf61e2562); /* 17 */  
 	GG (d, a, b, c, x[ 6], S22, 0xc040b340); /* 18 */      
 	GG (c, d, a, b, x[11], S23, 0x265e5a51); /* 19 */
@@ -88,7 +86,7 @@ void MD5::Transform(const BYTE block[64])
 	GG (d, a, b, c, x[ 2], S22, 0xfcefa3f8); /* 30 */
 	GG (c, d, a, b, x[ 7], S23, 0x676f02d9); /* 31 */
 	GG (b, c, d, a, x[12], S24, 0x8d2a4c8a); /* 32 */
-	/* 第 3 轮 */  
+	/* Round 3 */   
 	HH (a, b, c, d, x[ 5], S31, 0xfffa3942); /* 33 */  
 	HH (d, a, b, c, x[ 8], S32, 0x8771f681); /* 34 */     
 	HH (c, d, a, b, x[11], S33, 0x6d9d6122); /* 35 */
@@ -105,7 +103,7 @@ void MD5::Transform(const BYTE block[64])
 	HH (d, a, b, c, x[12], S32, 0xe6db99e5); /* 46 */
 	HH (c, d, a, b, x[15], S33, 0x1fa27cf8); /* 47 */
 	HH (b, c, d, a, x[ 2], S34, 0xc4ac5665); /* 48 */
-	/* 第 4 轮 */  
+	/* Round 4 */    
 	II (a, b, c, d, x[ 0], S41, 0xf4292244); /* 49 */  
 	II (d, a, b, c, x[ 7], S42, 0x432aff97); /* 50 */     
 	II (c, d, a, b, x[14], S43, 0xab9423a7); /* 51 */
